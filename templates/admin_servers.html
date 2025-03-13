@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Manage Servers | Admin{% endblock %}
+{% block content %}
+{% include "sidebar.html" %}
+
+<h1 class="my-4">Server Management</h1>
+
+<!-- Add New Server Form -->
+<form method="POST" class="mb-4">
+  <div class="row">
+    <div class="col-md-3 mb-3">
+      <label for="ip" class="form-label">Server IP</label>
+      <input type="text" class="form-control" id="ip" name="ip" placeholder="e.g. 192.168.1.100" required>
+    </div>
+    <div class="col-md-2 mb-3">
+      <label for="port" class="form-label">Port</label>
+      <input type="number" class="form-control" id="port" name="port" placeholder="80" required>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="login_user" class="form-label">Login User</label>
+      <input type="text" class="form-control" id="login_user" name="login_user" placeholder="root" required>
+    </div>
+    <div class="col-md-3 mb-3">
+      <label for="login_pass" class="form-label">Login Password</label>
+      <input type="text" class="form-control" id="login_pass" name="login_pass" placeholder="secretpass" required>
+    </div>
+    <div class="col-md-1 d-flex align-items-end">
+      <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+  </div>
+</form>
+
+<!-- Existing Servers Table -->
+<h4>Existing Servers</h4>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>IP</th>
+      <th>Port</th>
+      <th>Login User</th>
+      <th>Login Pass</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for srv in servers %}
+    <tr>
+      <td>{{ srv.id }}</td>
+      <td>{{ srv.ip }}</td>
+      <td>{{ srv.port }}</td>
+      <td>{{ srv.login_user }}</td>
+      <td>{{ srv.login_pass }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

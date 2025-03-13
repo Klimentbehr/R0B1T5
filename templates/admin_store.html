@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Manage Store | Admin{% endblock %}
+{% block content %}
+{% include "sidebar.html" %}
+
+<h1 class="my-4">Store Management</h1>
+
+<!-- Add New Item Form -->
+<div class="mb-4">
+  <h4>Add New Item</h4>
+  <form method="POST" class="col-md-6">
+    <input type="hidden" name="form_type" value="add_item">
+    <div class="mb-3">
+      <label for="item_name" class="form-label">Item Name</label>
+      <input type="text" class="form-control" id="item_name" name="item_name" required>
+    </div>
+    <div class="mb-3">
+      <label for="item_unit_price" class="form-label">Unit Price</label>
+      <input type="text" class="form-control" id="item_unit_price" name="item_unit_price" required>
+    </div>
+    <div class="mb-3">
+      <label for="item_quantity" class="form-label">Quantity</label>
+      <input type="number" class="form-control" id="item_quantity" name="item_quantity" required>
+    </div>
+    <div class="mb-3">
+      <label for="item_desc" class="form-label">Description</label>
+      <textarea class="form-control" id="item_desc" name="item_desc" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Item</button>
+  </form>
+</div>
+
+<!-- Existing Items Table -->
+<div>
+  <h4>Existing Store Items</h4>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Unit Price</th>
+        <th>Quantity</th>
+        <th>Description</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>${{ "%.2f"|format(product.unit_price) }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>{{ product.description }}</td>
+        <td>
+          <form method="POST" style="display:inline;">
+            <input type="hidden" name="form_type" value="remove_item">
+            <input type="hidden" name="item_id" value="{{ product.id }}">
+            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

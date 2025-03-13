@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Dashboard | My Flask Site{% endblock %}
+{% block content %}
+{% include "sidebar.html" %}
+
+<h1 class="my-4">Dashboard</h1>
+<div class="row">
+  <div class="col-md-3 mb-3">
+    <div class="card text-white bg-success">
+      <div class="card-body">
+        <h5 class="card-title">Bots Online</h5>
+        <p class="card-text fs-4">{{ data.bots_online }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 mb-3">
+    <div class="card text-white bg-danger">
+      <div class="card-body">
+        <h5 class="card-title">Bots Offline</h5>
+        <p class="card-text fs-4">{{ data.bots_offline }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 mb-3">
+    <div class="card text-white bg-primary">
+      <div class="card-body">
+        <h5 class="card-title">Servers Up</h5>
+        <p class="card-text fs-4">{{ data.servers_up }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 mb-3">
+    <div class="card text-white bg-secondary">
+      <div class="card-body">
+        <h5 class="card-title">Servers Down</h5>
+        <p class="card-text fs-4">{{ data.servers_down }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

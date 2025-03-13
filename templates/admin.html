@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Admin Home{% endblock %}
+{% block content %}
+{% include "sidebar.html" %}
+
+<h1 class="my-4">Admin Panel</h1>
+<p>Welcome, admin! Use the side menu to navigate to different admin sections.</p>
+
+<!-- Example: server status overview -->
+<div class="row mt-4">
+  {% for srv, status in server_info.items() %}
+  <div class="col-md-4 mb-3">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ srv }}</h5>
+        {% if status == 'Up' %}
+          <p class="text-success fw-bold">{{ status }}</p>
+        {% else %}
+          <p class="text-danger fw-bold">{{ status }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
