@@ -1,39 +1,39 @@
 {% extends "base.html" %}
-{% block title %}Dashboard | My Flask Site{% endblock %}
+{% block title %}Dashboard | Dark Site{% endblock %}
 {% block content %}
-{% include "sidebar.html" %}
+<h1 class="text-accent mb-4">Dashboard</h1>
+<p>Welcome back, {{ session.username }}!</p>
 
-<h1 class="my-4">Dashboard</h1>
 <div class="row">
   <div class="col-md-3 mb-3">
-    <div class="card text-white bg-success">
+    <div class="card">
       <div class="card-body">
         <h5 class="card-title">Bots Online</h5>
-        <p class="card-text fs-4">{{ data.bots_online }}</p>
+        <p class="display-6">{{ data.bots_online }}</p>
       </div>
     </div>
   </div>
   <div class="col-md-3 mb-3">
-    <div class="card text-white bg-danger">
+    <div class="card">
       <div class="card-body">
         <h5 class="card-title">Bots Offline</h5>
-        <p class="card-text fs-4">{{ data.bots_offline }}</p>
+        <p class="display-6">{{ data.bots_offline }}</p>
       </div>
     </div>
   </div>
   <div class="col-md-3 mb-3">
-    <div class="card text-white bg-primary">
+    <div class="card">
       <div class="card-body">
         <h5 class="card-title">Servers Up</h5>
-        <p class="card-text fs-4">{{ data.servers_up }}</p>
+        <p class="display-6">{{ data.servers_up }}</p>
       </div>
     </div>
   </div>
   <div class="col-md-3 mb-3">
-    <div class="card text-white bg-secondary">
+    <div class="card">
       <div class="card-body">
         <h5 class="card-title">Servers Down</h5>
-        <p class="card-text fs-4">{{ data.servers_down }}</p>
+        <p class="display-6">{{ data.servers_down }}</p>
       </div>
     </div>
   </div>

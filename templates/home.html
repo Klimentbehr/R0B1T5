@@ -1,13 +1,29 @@
 {% extends "base.html" %}
-{% block title %}Home | My Flask Site{% endblock %}
+
+{% block title %}R0B1T5 - Premium Robux Store{% endblock %}
+
+{% block header %}Welcome to R0B1T5{% endblock %}
+
 {% block content %}
-<div class="p-5 mb-4 bg-light rounded-3">
-  <div class="container py-5">
-    <h1 class="display-5 fw-bold">Welcome to Our Website</h1>
-    <p class="col-md-8 fs-4">
-      This is the home page. Use the navigation bar to explore or login/register.
-    </p>
-    <a class="btn btn-primary btn-lg" href="{{ url_for('store') }}" role="button">Visit Our Store</a>
-  </div>
+<div class="home-container">
+    <h2>🚀 Welcome to R0B1T5 - The Best Premium Robux Store!</h2>
+    <p>At <strong>R0B1T5</strong>, we provide the fastest and most secure way to get Robux at unbeatable prices.</p>
+
+    <div class="features">
+        <div class="feature">
+            <h3>🔥 Best Robux Deals</h3>
+            <p>Save money with our premium discount offers and get more Robux for less.</p>
+        </div>
+        <div class="feature">
+            <h3>⚡ Instant Delivery</h3>
+            <p>Receive your Robux instantly after purchase. No delays, no hassle.</p>
+        </div>
+        <div class="feature">
+            <h3>🔒 Secure Transactions</h3>
+            <p>All purchases are handled through safe and encrypted payment methods.</p>
+        </div>
+    </div>
+
+    <a href="{{ url_for('store') }}" class="btn">Browse Our Store</a>
 </div>
 {% endblock %}

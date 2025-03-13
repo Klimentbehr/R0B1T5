@@ -1,12 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Admin Home{% endblock %}
+{% block title %}Admin Panel | Dark Site{% endblock %}
 {% block content %}
-{% include "sidebar.html" %}
+<h1 class="text-accent mb-4">Admin Panel</h1>
+<p>Welcome, admin! Use the side menu or the links below to navigate.</p>
 
-<h1 class="my-4">Admin Panel</h1>
-<p>Welcome, admin! Use the side menu to navigate to different admin sections.</p>
-
-<!-- Example: server status overview -->
 <div class="row mt-4">
   {% for srv, status in server_info.items() %}
   <div class="col-md-4 mb-3">

@@ -1,27 +1,24 @@
 {% extends "base.html" %}
-{% block title %}Store | My Flask Site{% endblock %}
+{% block title %}Store | Dark Site{% endblock %}
 {% block content %}
-{% include "sidebar.html" %}
-
-<h1 class="my-4">Store</h1>
+<h1 class="text-accent mb-4">Store</h1>
 <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for product in products %}
-    <div class="col">
-      <div class="card h-100">
-        <img src="https://via.placeholder.com/300x200?text={{ product.name|replace(' ', '+') }}" 
-             class="card-img-top" alt="{{ product.name }}">
-        <div class="card-body">
-          <h5 class="card-title">{{ product.name }}</h5>
-          <p class="card-text">{{ product.description if product.description else "No description." }}</p>
-          <p class="mb-0"><strong>Unit Price:</strong> ${{ "%.2f"|format(product.unit_price) }}</p>
-          <p class="mb-0"><strong>Available:</strong> {{ product.quantity }}</p>
-          <p><small>Total Value: ${{ "%.2f"|format(product.unit_price * product.quantity) }}</small></p>
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-primary btn-sm">Buy Now</button>
-        </div>
+  {% for product in products %}
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">
+          {{ product.description if product.description else "No description." }}
+        </p>
+        <p><strong>Unit Price:</strong> ${{ "%.2f"|format(product.unit_price) }}</p>
+        <p><strong>Available:</strong> {{ product.quantity }}</p>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary btn-sm">Buy Now</button>
       </div>
     </div>
-    {% endfor %}
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}

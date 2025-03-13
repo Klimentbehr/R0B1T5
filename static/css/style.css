@@ -1,31 +1,114 @@
+/* ======================= */
+/* Global Page Styling     */
+/* ======================= */
+
 body {
-    font-family: Arial, sans-serif;
+    background-color: #1e1e1e; /* Dark gray */
+    color: white;
     margin: 0;
     padding: 0;
+    font-family: Arial, sans-serif;
+    transition: background-color 0.3s ease;
 }
 
-nav {
-    background-color: #f4f4f4;
-    padding: 10px;
-}
-
-nav a {
-    margin-right: 10px;
+/* Ensure links and buttons are visible */
+a, button {
+    color: white;
     text-decoration: none;
 }
+a:hover {
+    color: lightgray;
+}
+
+/* ======================= */
+/* Sidebar Styling        */
+/* ======================= */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    background-color: #2b2b2b;
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3);
+    color: white;
+    overflow-y: auto;
+    transform: translateX(-220px);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.sidebar.open {
+    transform: translateX(0);
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 20px;
+    margin: 0;
+}
+
+.sidebar ul li {
+    padding: 10px 0;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    font-size: 18px;
+    transition: background 0.2s;
+}
+
+.sidebar ul li a:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Sidebar Toggle Button */
+.sidebar-btn {
+    position: absolute;
+    top: 10px;
+    right: -40px;
+    width: 40px;
+    height: 40px;
+    background: #444;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.sidebar-btn:hover {
+    background: #666;
+}
+
+/* ======================= */
+/* Content Styling        */
+/* ======================= */
 
 .content {
-    margin: 20px;
+    background-color: #181818;
+    color: white;
+    margin-left: 0;
+    transition: margin-left 0.3s ease-in-out;
+    min-height: 100vh;
+    padding: 20px;
 }
-.offcanvas-start {
-    transition: transform 0.5s ease-in-out; /* example: half second, ease in/out */
-  }
-  
-footer {
+
+.content.with-sidebar {
+    margin-left: 220px;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #000000;
+    padding: 10px;
     text-align: center;
-    padding: 15px;
-    background-color: #f4f4f4;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+    font-size: 20px;
 }
+
+/* ======================= */
+/* Fix Sidebar State       */
+/* ======================= */

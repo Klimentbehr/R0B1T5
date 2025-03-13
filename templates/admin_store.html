@@ -1,9 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Manage Store | Admin{% endblock %}
 {% block content %}
-{% include "sidebar.html" %}
-
-<h1 class="my-4">Store Management</h1>
+<h1 class="text-accent mb-4">Store Management</h1>
 
 <!-- Add New Item Form -->
 <div class="mb-4">
@@ -30,38 +28,36 @@
   </form>
 </div>
 
-<!-- Existing Items Table -->
-<div>
-  <h4>Existing Store Items</h4>
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Unit Price</th>
-        <th>Quantity</th>
-        <th>Description</th>
-        <th>Remove</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for product in products %}
-      <tr>
-        <td>{{ product.id }}</td>
-        <td>{{ product.name }}</td>
-        <td>${{ "%.2f"|format(product.unit_price) }}</td>
-        <td>{{ product.quantity }}</td>
-        <td>{{ product.description }}</td>
-        <td>
-          <form method="POST" style="display:inline;">
-            <input type="hidden" name="form_type" value="remove_item">
-            <input type="hidden" name="item_id" value="{{ product.id }}">
-            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-          </form>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
+<!-- Existing Store Items -->
+<h4>Existing Store Items</h4>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Unit Price</th>
+      <th>Quantity</th>
+      <th>Description</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <td>{{ product.id }}</td>
+      <td>{{ product.name }}</td>
+      <td>${{ "%.2f"|format(product.unit_price) }}</td>
+      <td>{{ product.quantity }}</td>
+      <td>{{ product.description }}</td>
+      <td>
+        <form method="POST" style="display:inline;">
+          <input type="hidden" name="form_type" value="remove_item">
+          <input type="hidden" name="item_id" value="{{ product.id }}">
+          <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}

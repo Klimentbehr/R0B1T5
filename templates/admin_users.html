@@ -1,28 +1,26 @@
 {% extends "base.html" %}
 {% block title %}Manage Users | Admin{% endblock %}
 {% block content %}
-{% include "sidebar.html" %}
+<h1 class="text-accent mb-4">User Management</h1>
 
-<h1 class="my-4">User Management</h1>
-
-<!-- Pending Users -->
+<!-- Pending Approvals -->
 <div class="mb-5">
-  <h4>Pending Approvals</h4>
+  <h4>Pending Users</h4>
   {% if pending_users %}
     <form method="POST">
       <input type="hidden" name="form_type" value="approve_accounts">
       <ul class="list-group mb-3">
         {% for user, pwd in pending_users.items() %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
+        <li class="list-group-item bg-dark d-flex justify-content-between align-items-center">
           {{ user }}
           <input type="checkbox" name="pending_users" value="{{ user }}">
         </li>
         {% endfor %}
       </ul>
-      <button type="submit" class="btn btn-success">Approve Selected</button>
+      <button type="submit" class="btn btn-primary">Approve Selected</button>
     </form>
   {% else %}
-    <p>No pending users.</p>
+    <p class="text-secondary">No pending users.</p>
   {% endif %}
 </div>
 
@@ -31,7 +29,7 @@
   <h4>Approved Users</h4>
   <ul class="list-group">
     {% for user, pwd in approved_users.items() %}
-      <li class="list-group-item">{{ user }}</li>
+      <li class="list-group-item bg-dark">{{ user }}</li>
     {% endfor %}
   </ul>
 </div>

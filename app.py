@@ -9,8 +9,6 @@ app.secret_key = 'YOUR_SECRET_KEY'  # Replace with a secure, random key in produ
 ###############################################################################
 #                            IN-MEMORY STORAGE
 ###############################################################################
-# For demonstration. In production, replace with a database.
-
 approved_users = {
     "admin": "admin"  # Basic admin user
 }
@@ -34,16 +32,34 @@ store_items = [
 ]
 next_item_id = 3
 
-# Basic server status (fake example)
+# Basic example server info
 server_info = {
     "Server 1": "Up",
     "Server 2": "Up",
     "Server 3": "Down"
 }
 
-# In-memory list of servers, so we can add new ones from admin page.
+# In-memory list of servers
 servers = []
 next_server_id = 1
+
+###############################################################################
+#                   HELPER: Check If Server (IP:Port) Is Reachable
+###############################################################################
+
+def is_server_open(ip, port=80, timeout=2):
+    """
+    Check if a server (ip:port) is reachable within the given timeout.
+    Returns True if open (reachable), False if not.
+    """
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.settimeout(timeout)
+        result = sock.connect_ex((ip, port))
+        sock.close()
+        return (result == 0)
+    except:
+        return False
 
 ###############################################################################
 #                               AUTH & USERS
@@ -58,7 +74,6 @@ def login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        # Simple check
         if username in approved_users and approved_users[username] == password:
             session['logged_in'] = True
             session['username'] = username
@@ -106,7 +121,6 @@ def dashboard():
 
 @app.route('/store')
 def store():
-    # Public store page
     return render_template('store.html', products=store_items)
 
 ###############################################################################
@@ -132,7 +146,6 @@ def admin_store():
 
     if request.method == 'POST':
         form_type = request.form.get('form_type')
-
         if form_type == 'add_item':
             # Create new store item
             item_name = request.form.get('item_name')
@@ -145,7 +158,6 @@ def admin_store():
                     unit_price = float(item_unit_price)
                     quantity = int(item_quantity)
                 except ValueError:
-                    # Invalid numeric input
                     pass
                 else:
                     new_item = {
@@ -189,7 +201,6 @@ def admin_users():
             selected_accounts = request.form.getlist('pending_users')
             for user in selected_accounts:
                 if user in pending_users:
-                    # Move from pending to approved
                     approved_users[user] = pending_users[user]
                     del pending_users[user]
             return redirect(url_for('admin_users'))
@@ -204,6 +215,10 @@ def admin_users():
 
 @app.route('/admin/servers', methods=['GET', 'POST'])
 def admin_servers():
+    """
+    Displays all servers, updates each server's status ("Open"/"Down"),
+    and allows adding new servers by IP + Port.
+    """
     if not session.get('logged_in') or not session.get('is_admin'):
         return redirect(url_for('login'))
 
@@ -211,61 +226,47 @@ def admin_servers():
 
     if request.method == 'POST':
         ip = request.form.get('ip')
-        port_str = request.form.get('port')
-        login_user = request.form.get('login_user')
-        login_pass = request.form.get('login_pass')
-
-        # Basic parse for port
+        port_str = request.form.get('port', '9999')
         try:
             port = int(port_str)
         except ValueError:
-            port = 80
+            port = 9999  # default fallback
 
         servers.append({
             "id": next_server_id,
             "ip": ip,
-            "port": port,
-            "login_user": login_user,
-            "login_pass": login_pass
+            "port": port
         })
         next_server_id += 1
+
         return redirect(url_for('admin_servers'))
+
+    # BEFORE rendering, check each server's status
+    for srv in servers:
+        if is_server_open(srv["ip"], srv["port"]):
+            srv["status"] = "Open"
+        else:
+            srv["status"] = "Down"
 
     return render_template('admin_servers.html', servers=servers)
 
 ###############################################################################
-#                          API ROUTE: SERVERS
+#                           API ROUTE: SERVERS
 ###############################################################################
 
 @app.route('/api/servers')
 def servers_api():
     """
     Returns JSON list of servers for the bot script to consume.
-    In production, secure this route properly.
     """
     return jsonify(servers)
 
 ###############################################################################
-#                        IP DETECTION & FLASK RUN
+#                           LAUNCH THE APP
 ###############################################################################
 
-def get_local_ip():
-    """
-    Returns the local IP address of this computer by attempting a connection
-    to a well-known address (Google DNS), then reading which IP is used.
-    This helps us avoid defaulting to 127.0.0.1 on Windows.
-    """
-    try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(("8.8.8.8", 80))
-        ip = s.getsockname()[0]
-        s.close()
-        return ip
-    except:
-        # Fallback if detection fails
-        return "127.0.0.1"
-
 if __name__ == '__main__':
-    # Force Flask to bind to your Hamachi IP
-    app.run(host='0.0.0.0', port=5000, debug=True)
-
+    # Bind directly to your Hamachi IP (25.0.129.19) on port 5000
+    # so the bot or other machines on your Hamachi network can connect.
+    print("Starting Flask on 25.0.129.19:5000 (debug mode)")
+    app.run(host='25.0.129.19', port=5000, debug=True)

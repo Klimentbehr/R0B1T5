@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% block title %}Register | My Flask Site{% endblock %}
+{% block title %}Register | Dark Site{% endblock %}
 {% block content %}
-<h1 class="my-4">Create an Account</h1>
+<h1 class="text-accent mb-4">Create an Account</h1>
 
 {% if error %}
   <div class="alert alert-danger">{{ error }}</div>
@@ -21,6 +21,4 @@
   </div>
   <button type="submit" class="btn btn-primary">Register</button>
 </form>
-
-<p class="mt-3">Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
 {% endblock %}
